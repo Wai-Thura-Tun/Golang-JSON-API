@@ -17,6 +17,9 @@ func main() {
 	// Define auth routhes. Those will be public
 	AuthHandlers(api.Group("/auth"), db)
 
+	// Download the books as either CSV or JSON
+	Download(api.Group("/download"), db)
+
 	// Verify the JWT
 	protected := api.Group("/book", AuthMiddleware(db))
 

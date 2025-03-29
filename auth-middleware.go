@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -17,6 +18,7 @@ func AuthMiddleware(db *gorm.DB) fiber.Handler {
 		var tokenString string
 		if cookieToken != "" {
 			tokenString = cookieToken
+			log.Print("Using cookie token...")
 		} else {
 			// Get the auth header
 			authHeader := c.Get("Authorization")
@@ -36,6 +38,7 @@ func AuthMiddleware(db *gorm.DB) fiber.Handler {
 				})
 			}
 			tokenString = tokenParts[1]
+			log.Print("Using token from auth header...")
 		}
 
 		// Parse Token
